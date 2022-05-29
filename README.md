@@ -1,5 +1,5 @@
 # nestjs-opensearch
-OpenSearch (alternative to Elasticsearch) module for NestJS framework
+OpenSearch module for NestJS framework
 
 ## Installation
 For NPM:
@@ -12,7 +12,7 @@ $ yarn add nestjs-opensearch @opensearch-project/opensearch
 ```
 
 ## Usage
-Module for only one connection:
+Module for single connection:
 ```typescript
 import { OpensearchModule } from 'nestjs-opensearch';
 
@@ -27,7 +27,7 @@ import { OpensearchModule } from 'nestjs-opensearch';
 export class SearchModule { }
 ```
 
-Module for multiple connection:
+Module for multiple connections:
 ```typescript
 import { OpensearchModule } from 'nestjs-opensearch';
 
@@ -49,6 +49,27 @@ import { OpensearchModule } from 'nestjs-opensearch';
 export class SearchModule { }
 ```
 
+Module for async configuration:
+```typescript
+import { OpensearchModule } from 'nestjs-opensearch';
+
+@Module({
+  imports: [
+    // See also: https://docs.nestjs.com/techniques/configuration
+    ConfigModule,
+    OpensearchModule.forRootAsync({
+      clientName: 'baz',
+      inject: [ ConfigService ],
+      useFactory: (configService) => ({
+        node: configService.get<string>('opensearch.node'),
+      }),
+    }),
+  ],
+  providers: (...),
+})
+export class SearchModule { }
+```
+
 Client injection:
 ```typescript
 import { InjectOpensearchClient, OpensearchClient } from 'nestjs-opensearch';
@@ -56,15 +77,16 @@ import { InjectOpensearchClient, OpensearchClient } from 'nestjs-opensearch';
 @Injectable()
 export class SearchService {
   public constructor(
-    // For default
+    // Inject the default client
     private readonly searchClient: OpensearchClient,
 
-    // Also for default
-    @InjectOpensearchClient() private readonly searchClient: OpensearchClient,
+    // Also inject the default client
+    @InjectOpensearchClient()
+    private readonly alsoSearchClient: OpensearchClient,
 
-    // For 'foo' client
-    @InjectOpensearchClient('foo') private readonly searchClient: OpensearchClient,
+    // Inject the 'foo' named client
+    @InjectOpensearchClient('foo')
+    private readonly fooSearchClient: OpensearchClient,
   ) { }
 }
 ```
-
