@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "author": "neoatlan",
   "license": "MIT",
-  "description": "OpenSearch (alternative to Elasticsearch) module for NestJS framework",
+  "description": "OpenSearch module for NestJS framework",
   "repository": {
     "type": "git",
     "url": "https://github.com/neoatlan/nestjs-opensearch.git"
