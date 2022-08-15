@@ -2,7 +2,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
     sourceType: 'module',
-    project: 'tsconfig.json',
+    project: ['tsconfig.json', 'test/*/tsconfig.json'],
   },
   plugins: ['@typescript-eslint'],
   extends: [
@@ -12,7 +12,10 @@ module.exports = {
   env: {
     node: true
   },
-  ignorePatterns: ['.eslintrc.js'],
+  ignorePatterns: [
+    '.eslintrc.js',
+    'dist'
+  ],
   rules: {
     quotes: ['warn', 'single'],
     semi: ['warn', 'always'],

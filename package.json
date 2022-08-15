@@ -1,16 +1,18 @@
 {
   "name": "nestjs-opensearch",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "neoatlan",
   "license": "MIT",
-  "description": "OpenSearch (alternative to Elasticsearch) module for NestJS framework",
+  "description": "OpenSearch module for NestJS framework",
   "repository": {
     "type": "git",
     "url": "https://github.com/neoatlan/nestjs-opensearch.git"
   },
+  "packageManager": "yarn@3.2.2",
   "scripts": {
-    "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "yarn clean && tsc",
+    "clean": "rimraf dist",
+    "test": "yarn build && yarn workspaces foreach -v --include 'test-*' run test"
   },
   "keywords": [
     "opensearch",
@@ -21,6 +23,9 @@
     "nodejs",
     "node"
   ],
+  "workspaces": [
+    "test/*"
+  ],
   "peerDependencies": {
     "@nestjs/common": "^8.0.0 || ^9.0.0",
     "@opensearch-project/opensearch": "^1.0.0 || ^2.0.0"
@@ -28,10 +33,12 @@
   "devDependencies": {
     "@nestjs/common": "^9.0.3",
     "@opensearch-project/opensearch": "^2.0.0",
+    "@types/rimraf": "^3.0.2",
     "@typescript-eslint/eslint-plugin": "^5.30.6",
     "@typescript-eslint/parser": "^5.30.6",
     "eslint": "^8.20.0",
     "reflect-metadata": "^0.1.13",
+    "rimraf": "^3.0.2",
     "rxjs": "^7.5.6",
     "typescript": "^4.7.4"
   }
