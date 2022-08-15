@@ -31,7 +31,7 @@ export class OpensearchModule {
 
     return options.map((option) => ({
       provide: option.clientName ? buildInjectionToken(option.clientName) : OpensearchClient,
-      useValue: new OpensearchClient(option),
+      useFactory: () => new OpensearchClient(option),
     }));
   }
 
