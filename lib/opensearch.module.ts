@@ -29,7 +29,7 @@ export class OpensearchModule {
       return OpensearchModule.buildProviders([ options ]);
     }
 
-    return options.map(option => ({
+    return options.map((option) => ({
       provide: option.clientName ? buildInjectionToken(option.clientName) : OpensearchClient,
       useValue: new OpensearchClient(option),
     }));
@@ -40,12 +40,15 @@ export class OpensearchModule {
       return OpensearchModule.buildAsyncProviders([ options ]);
     }
 
-    return options.map(option => ({
+    return options.map((option) => ({
       provide: option.clientName ? buildInjectionToken(option.clientName) : OpensearchClient,
       inject: option.inject,
       useFactory: async (...args: any[]) => {
         const clientOptions = await option.useFactory(...args);
-        return new OpensearchClient(clientOptions);
+        return new OpensearchClient({
+          ...clientOptions,
+          clientName: option.clientName,
+        });
       },
     }));
   }
