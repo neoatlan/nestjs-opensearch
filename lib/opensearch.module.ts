@@ -1,4 +1,4 @@
-import { DynamicModule, Inject, Module, OnModuleDestroy, Provider } from '@nestjs/common';
+import { DynamicModule, Inject, Module, OnApplicationShutdown, Provider } from '@nestjs/common';
 import { buildInjectionToken } from './helpers';
 import type { OpensearchClientOptions, OpensearchAsyncClientOptions } from './interfaces';
 import { OpensearchClient } from './opensearch-client';
@@ -15,7 +15,7 @@ type ClientMap = Map<string | symbol | undefined, OpensearchClient>;
     },
   ],
 })
-export class OpensearchModule implements OnModuleDestroy {
+export class OpensearchModule implements OnApplicationShutdown {
   public static forRoot(options: OpensearchClientOptions | OpensearchClientOptions[]): DynamicModule {
     const providers = OpensearchModule.buildProviders(options);
     return {
@@ -75,7 +75,7 @@ export class OpensearchModule implements OnModuleDestroy {
     private readonly clientMap: ClientMap,
   ) { }
 
-  public async onModuleDestroy() {
+  public async onApplicationShutdown() {
     const promises: Promise<unknown>[] = [];
 
     this.clientMap.forEach((client, clientName) => {
