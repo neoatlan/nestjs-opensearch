@@ -81,9 +81,7 @@ export class OpensearchModule implements OnApplicationShutdown {
     this.clientMap.forEach((client, clientName) => {
       promises.push((async () => {
         try {
-          if (client.connectionPool.size) {
-            await client.close();
-          }
+          await client.close();
         } catch {
           /* Ignore */
         }
