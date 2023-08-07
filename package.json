@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/neoatlan/nestjs-opensearch.git"
   },
-  "packageManager": "yarn@3.5.0",
+  "packageManager": "yarn@3.6.1",
   "scripts": {
     "build": "yarn clean && tsc",
     "clean": "rimraf dist",
@@ -27,7 +27,7 @@
     "test/*"
   ],
   "peerDependencies": {
-    "@nestjs/common": "^8.0.0 || ^9.0.0",
+    "@nestjs/common": "^8.0.0 || ^9.0.0 || ^10.0.0",
     "@opensearch-project/opensearch": "^1.0.0 || ^2.0.0"
   },
   "devDependencies": {
