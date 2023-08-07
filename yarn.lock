@@ -1007,6 +1007,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nestjs/common@npm:^10.0.0":
+  version: 10.1.3
+  resolution: "@nestjs/common@npm:10.1.3"
+  dependencies:
+    iterare: 1.2.1
+    tslib: 2.6.1
+    uid: 2.0.2
+  peerDependencies:
+    class-transformer: "*"
+    class-validator: "*"
+    reflect-metadata: ^0.1.12
+    rxjs: ^7.1.0
+  peerDependenciesMeta:
+    class-transformer:
+      optional: true
+    class-validator:
+      optional: true
+  checksum: 921d11525e9fa8e495a155dcae366b2797ea6ba9a47cfa77c9c36e69b49318eb2391407ed64a687f359b97ab0f71cc9bfe8c57cb4ef960df64d02450019a6ba3
+  languageName: node
+  linkType: hard
+
 "@nestjs/common@npm:^8.0.0":
   version: 8.4.7
   resolution: "@nestjs/common@npm:8.4.7"
@@ -1077,6 +1098,34 @@ __metadata:
     class-validator:
       optional: true
   checksum: c31a3bc16362cc537865c5285161b92113118f0e952d95390525b19f3c999a76ad952ead9db969735afd22ca2cc085b40e1a258fde3351e2b5028d9fdbbf9967
+  languageName: node
+  linkType: hard
+
+"@nestjs/core@npm:^10.0.0":
+  version: 10.1.3
+  resolution: "@nestjs/core@npm:10.1.3"
+  dependencies:
+    "@nuxtjs/opencollective": 0.3.2
+    fast-safe-stringify: 2.1.1
+    iterare: 1.2.1
+    path-to-regexp: 3.2.0
+    tslib: 2.6.1
+    uid: 2.0.2
+  peerDependencies:
+    "@nestjs/common": ^10.0.0
+    "@nestjs/microservices": ^10.0.0
+    "@nestjs/platform-express": ^10.0.0
+    "@nestjs/websockets": ^10.0.0
+    reflect-metadata: ^0.1.12
+    rxjs: ^7.1.0
+  peerDependenciesMeta:
+    "@nestjs/microservices":
+      optional: true
+    "@nestjs/platform-express":
+      optional: true
+    "@nestjs/websockets":
+      optional: true
+  checksum: 7d6194cfbe71ca9875c86f45977f6fd4c2afefdefb30e29bf419ee8e0c65dce73479f9059b31f08cfe1cd1686a3c6798978686c0107b293bb5944120e8ca1c61
   languageName: node
   linkType: hard
 
@@ -1163,6 +1212,25 @@ __metadata:
     "@nestjs/websockets":
       optional: true
   checksum: 9a2ba9c304aae9655a8656e7eb2b9644340bc5498216377818c62d58930c1326dd313f3f20497e2499ed4c6215b5b77a2d18f874a463c14094b216ae743f14e1
+  languageName: node
+  linkType: hard
+
+"@nestjs/testing@npm:^10.0.0":
+  version: 10.1.3
+  resolution: "@nestjs/testing@npm:10.1.3"
+  dependencies:
+    tslib: 2.6.1
+  peerDependencies:
+    "@nestjs/common": ^10.0.0
+    "@nestjs/core": ^10.0.0
+    "@nestjs/microservices": ^10.0.0
+    "@nestjs/platform-express": ^10.0.0
+  peerDependenciesMeta:
+    "@nestjs/microservices":
+      optional: true
+    "@nestjs/platform-express":
+      optional: true
+  checksum: e7e5c9b81a2347201b588087b968391a63ae753f297607a5b845a547d237971b4c1b972121aee00f2c6157973801c1ec289b6d772a480a6a9dd2cecd18058acb
   languageName: node
   linkType: hard
 
@@ -4504,6 +4572,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nestjs-opensearch@link:../../dist::locator=test-nestjs10-opensearch2%40workspace%3Atest%2Fnestjs10-opensearch2":
+  version: 0.0.0-use.local
+  resolution: "nestjs-opensearch@link:../../dist::locator=test-nestjs10-opensearch2%40workspace%3Atest%2Fnestjs10-opensearch2"
+  languageName: node
+  linkType: soft
+
 "nestjs-opensearch@link:../../dist::locator=test-nestjs8-opensearch1%40workspace%3Atest%2Fnestjs8-opensearch1":
   version: 0.0.0-use.local
   resolution: "nestjs-opensearch@link:../../dist::locator=test-nestjs8-opensearch1%40workspace%3Atest%2Fnestjs8-opensearch1"
@@ -4537,7 +4611,7 @@ __metadata:
     rxjs: ^7.5.6
     typescript: ^4.7.4
   peerDependencies:
-    "@nestjs/common": ^8.0.0 || ^9.0.0
+    "@nestjs/common": ^8.0.0 || ^9.0.0 || ^10.0.0
     "@opensearch-project/opensearch": ^1.0.0 || ^2.0.0
   languageName: unknown
   linkType: soft
@@ -5034,6 +5108,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rxjs@npm:^7.8.1":
+  version: 7.8.1
+  resolution: "rxjs@npm:7.8.1"
+  dependencies:
+    tslib: ^2.1.0
+  checksum: de4b53db1063e618ec2eca0f7965d9137cabe98cf6be9272efe6c86b47c17b987383df8574861bcced18ebd590764125a901d5506082be84a8b8e364bf05f119
+  languageName: node
+  linkType: hard
+
 "safe-buffer@npm:~5.1.1":
   version: 5.1.2
   resolution: "safe-buffer@npm:5.1.2"
@@ -5335,6 +5418,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"test-nestjs10-opensearch2@workspace:test/nestjs10-opensearch2":
+  version: 0.0.0-use.local
+  resolution: "test-nestjs10-opensearch2@workspace:test/nestjs10-opensearch2"
+  dependencies:
+    "@nestjs/common": ^10.0.0
+    "@nestjs/core": ^10.0.0
+    "@nestjs/testing": ^10.0.0
+    "@opensearch-project/opensearch": ^2.0.0
+    "@types/jest": ^29.5.0
+    jest: ^29.5.0
+    nestjs-opensearch: "link:../../dist"
+    reflect-metadata: ^0.1.13
+    rxjs: ^7.8.1
+    ts-jest: ^29.1.0
+    typescript: ^5.1.0
+  languageName: unknown
+  linkType: soft
+
 "test-nestjs8-opensearch1@workspace:test/nestjs8-opensearch1":
   version: 0.0.0-use.local
   resolution: "test-nestjs8-opensearch1@workspace:test/nestjs8-opensearch1"
@@ -5506,6 +5607,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tslib@npm:2.6.1":
+  version: 2.6.1
+  resolution: "tslib@npm:2.6.1"
+  checksum: b0d176d176487905b66ae4d5856647df50e37beea7571c53b8d10ba9222c074b81f1410fb91da13debaf2cbc970663609068bdebafa844ea9d69b146527c38fe
+  languageName: node
+  linkType: hard
+
 "tslib@npm:^1.8.1":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
@@ -5574,6 +5682,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:^5.1.0":
+  version: 5.1.6
+  resolution: "typescript@npm:5.1.6"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: b2f2c35096035fe1f5facd1e38922ccb8558996331405eb00a5111cc948b2e733163cc22fab5db46992aba7dd520fff637f2c1df4996ff0e134e77d3249a7350
+  languageName: node
+  linkType: hard
+
 "typescript@patch:typescript@^4.7.4#~builtin<compat/typescript>":
   version: 4.7.4
   resolution: "typescript@patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=65a307"
@@ -5586,11 +5704,21 @@ __metadata:
 
 "typescript@patch:typescript@^5.0.3#~builtin<compat/typescript>":
   version: 5.0.3
-  resolution: "typescript@patch:typescript@npm%3A5.0.3#~builtin<compat/typescript>::version=5.0.3&hash=85af82"
+  resolution: "typescript@patch:typescript@npm%3A5.0.3#~builtin<compat/typescript>::version=5.0.3&hash=b5f058"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 5580367025ff7ee1f2a61e5affdbddccfe6e893bc662aa33fefdbf12de7e493173fa7d47475e9e15121828691004c4ed13bcd115e57866baed97b54c60954e1c
+  checksum: f341676d09552abce8c2e86a9980bccef3d4c0a5e89fb2b8a2649fbbce8141c742cc44765649aafd92f8fe5da61ae36ca236879d959a64ed9844af9e994dbe3b
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@^5.1.0#~builtin<compat/typescript>":
+  version: 5.1.6
+  resolution: "typescript@patch:typescript@npm%3A5.1.6#~builtin<compat/typescript>::version=5.1.6&hash=5da071"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: f53bfe97f7c8b2b6d23cf572750d4e7d1e0c5fff1c36d859d0ec84556a827b8785077bc27676bf7e71fae538e517c3ecc0f37e7f593be913d884805d931bc8be
   languageName: node
   linkType: hard
 
@@ -5600,6 +5728,15 @@ __metadata:
   dependencies:
     "@lukeed/csprng": ^1.0.0
   checksum: 0a3c697d8dd1f3b647afa35c411b11fd8fa2fb6dbd8a49fe109a4aa5214068c2c58781aa6e4516dfd16f0fc524fb7bba0833e9c1dc1ed3f1965b520349be9ad5
+  languageName: node
+  linkType: hard
+
+"uid@npm:2.0.2":
+  version: 2.0.2
+  resolution: "uid@npm:2.0.2"
+  dependencies:
+    "@lukeed/csprng": ^1.0.0
+  checksum: 98aabddcd6fe46f9b331b0378a93ee9cc51474348ada02006df9d10b4abc783ed596748ed9f20d7f6c5ff395dbcd1e764a65a68db6f39a31c95ae85ef13fe979
   languageName: node
   linkType: hard
 
