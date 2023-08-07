@@ -1,6 +1,6 @@
 {
   "name": "nestjs-opensearch",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "author": "neoatlan",
   "license": "MIT",
   "description": "OpenSearch module for NestJS framework",
