@@ -12,7 +12,7 @@
   "scripts": {
     "build": "yarn clean && tsc",
     "clean": "rimraf dist",
-    "test": "yarn build && yarn workspaces foreach -v --include 'test-*' run test"
+    "test": "yarn build && node scripts/sync-tests && yarn workspaces foreach -v --include 'test-*' run test"
   },
   "keywords": [
     "opensearch",
