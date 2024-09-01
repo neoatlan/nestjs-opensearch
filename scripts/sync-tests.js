@@ -2,6 +2,8 @@
 const { copyFile, readdir } = require('fs/promises');
 const { join } = require('path');
 
+const NON_COPYING_BASE_FILES = [ 'package.json' ];
+
 async function main() {
   const testRoot = join(__dirname, '..', 'test');
   const testDirs = (await readdir(testRoot, { withFileTypes: true }))
@@ -11,7 +13,7 @@ async function main() {
   const testBaseDir = join(testRoot, 'base');
   const baseFiles = (await readdir(testBaseDir, { withFileTypes: true }))
     .filter((file) => file.isFile())
-    .filter((file) => file.name !== 'package.json')
+    .filter((file) => !NON_COPYING_BASE_FILES.includes(file.name))
     .map((file) => file.name);
 
   const promises = [];
