@@ -1,11 +1,19 @@
 import { DynamicModule, Inject, Module, OnApplicationShutdown, Provider } from '@nestjs/common';
 import { buildInjectionToken } from './helpers';
-import type { OpensearchClientOptions, OpensearchAsyncClientOptions } from './interfaces';
+import type {
+  OpensearchClientOptions,
+  OpensearchClientOptionsFactory,
+  OpensearchAsyncClientOptions,
+} from './interfaces';
 import { OpensearchClient } from './opensearch-client';
 import { clientMapSym } from './symbols';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 type ClientMap = Map<string | symbol | undefined, OpensearchClient>;
+interface BuildAsyncProviderResult {
+  internalProviders: Provider[];
+  externalProviders: Provider[];
+}
 
 @Module({
   providers: [
@@ -32,12 +40,12 @@ export class OpensearchModule implements OnApplicationShutdown {
   /** @deprecated Please call forRootAsync() multiple times instead of using an array */
   public static forRootAsync(options: OpensearchAsyncClientOptions[]): DynamicModule;
   public static forRootAsync(options: OpensearchAsyncClientOptions | OpensearchAsyncClientOptions[]): DynamicModule {
-    const providers = OpensearchModule.buildAsyncProviders(options);
+    const { internalProviders, externalProviders } = OpensearchModule.buildAsyncProviders(options);
     return {
       module: OpensearchModule,
       imports: Array.isArray(options) ? undefined : options.imports,
-      exports: providers,
-      providers,
+      exports: externalProviders,
+      providers: internalProviders.concat(externalProviders),
     };
   }
 
@@ -57,24 +65,51 @@ export class OpensearchModule implements OnApplicationShutdown {
     }));
   }
 
-  private static buildAsyncProviders(options: OpensearchAsyncClientOptions | OpensearchAsyncClientOptions[]): Provider[] {
+  private static buildAsyncProviders(options: OpensearchAsyncClientOptions | OpensearchAsyncClientOptions[]): BuildAsyncProviderResult {
     if (!Array.isArray(options)) {
       return OpensearchModule.buildAsyncProviders([ options ]);
     }
 
-    return options.map((option) => ({
-      provide: option.clientName ? buildInjectionToken(option.clientName) : OpensearchClient,
-      inject: [ clientMapSym, ...(option.inject || []) ],
-      useFactory: async (clientMap: ClientMap, ...args: any[]) => {
-        const clientOptions = await option.useFactory(...args);
-        const client = new OpensearchClient({
-          ...clientOptions,
-          clientName: option.clientName,
+    const internalProviders: Provider[] = [];
+    const externalProviders: Provider[] = [];
+
+    options.forEach((option) => {
+      const inject: any[] = [ clientMapSym ];
+      const isUseClass = 'useClass' in option;
+
+      if (isUseClass) {
+        internalProviders.push({
+          provide: option.useClass,
+          useClass: option.useClass,
         });
-        clientMap.set(option.clientName, client);
-        return client;
-      },
-    }));
+        inject.push(option.useClass);
+      } else if (Array.isArray(option.inject)) {
+        inject.push(...option.inject);
+      }
+
+      externalProviders.push({
+        provide: option.clientName ? buildInjectionToken(option.clientName) : OpensearchClient,
+        inject,
+        useFactory: async (clientMap: ClientMap, ...args: any[]) => {
+          const clientOptions = await (
+            isUseClass
+              ? (args[0] as OpensearchClientOptionsFactory).createOpensearchClientOptions()
+              : option.useFactory(...args)
+          );
+          const client = new OpensearchClient({
+            ...clientOptions,
+            clientName: option.clientName,
+          });
+          clientMap.set(option.clientName, client);
+          return client;
+        },
+      });
+    });
+
+    return {
+      internalProviders,
+      externalProviders,
+    };
   }
 
   public constructor(

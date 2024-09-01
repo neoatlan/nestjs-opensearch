@@ -27,7 +27,7 @@ For Yarn:
 $ yarn add nestjs-opensearch @opensearch-project/opensearch
 ```
 
-## Usage
+## Module configuration
 Module for single connection:
 ```typescript
 import { OpensearchModule } from 'nestjs-opensearch';
@@ -63,16 +63,16 @@ import { OpensearchModule } from 'nestjs-opensearch';
 export class SearchModule { }
 ```
 
-Module for async configuration:
+Module for async configuration using useFactory:
 ```typescript
 import { OpensearchModule } from 'nestjs-opensearch';
 
 @Module({
   imports: [
-    // See also: https://docs.nestjs.com/techniques/configuration
-    ConfigModule,
     OpensearchModule.forRootAsync({
       clientName: 'baz',
+      // See also: https://docs.nestjs.com/techniques/configuration
+      imports: [ ConfigModule ],
       inject: [ ConfigService ],
       useFactory: (configService) => ({
         node: configService.get<string>('opensearch.node'),
@@ -84,7 +84,34 @@ import { OpensearchModule } from 'nestjs-opensearch';
 export class SearchModule { }
 ```
 
-Client injection:
+Module for async configuration using useClass:
+```typescript
+import type { ClientOptions } from '@opensearch-project/opensearch';
+import { OpensearchModule, OpensearchClientOptionsFactory } from 'nestjs-opensearch';
+
+@Injectable()
+export class OpensearchConfigService implements OpensearchClientOptionsFactory {
+  public async createOpensearchClientOptions(): Promise<ClientOptions> {
+    const configs = await fetch(...);
+    return {
+      node: configs.node,
+    };
+  }
+}
+
+@Module({
+  imports: [
+    OpensearchModule.forRootAsync({
+      clientName: 'qux',
+      useClass: OpensearchConfigService,
+    }),
+  ],
+  providers: (...),
+})
+export class SearchModule { }
+```
+
+## Client usage
 ```typescript
 import { InjectOpensearchClient, OpensearchClient } from 'nestjs-opensearch';
 

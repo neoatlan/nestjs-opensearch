@@ -48,3 +48,8 @@ Thumbs.db
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Copying files
+test/**/*
+!test/base
+!test/**/package.json
