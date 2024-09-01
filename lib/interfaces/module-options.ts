@@ -1,4 +1,4 @@
-import type { ModuleMetadata } from '@nestjs/common';
+import type { ModuleMetadata, Type } from '@nestjs/common';
 import type { ClientOptions } from '@opensearch-project/opensearch';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -18,7 +18,7 @@ export interface OpensearchClientOptionsFactory {
 }
 
 interface OpensearchAsyncClientOptionsUseClass extends OpensearchAsyncClientOptionsBase {
-  useClass: OpensearchClientOptionsFactory;
+  useClass: Type<OpensearchClientOptionsFactory>;
 }
 
 export type OpensearchAsyncClientOptions = OpensearchAsyncClientOptionsUseFactory | OpensearchAsyncClientOptionsUseClass;
