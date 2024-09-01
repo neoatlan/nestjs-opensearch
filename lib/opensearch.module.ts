@@ -1,6 +1,10 @@
 import { DynamicModule, Inject, Module, OnApplicationShutdown, Provider } from '@nestjs/common';
 import { buildInjectionToken } from './helpers';
-import type { OpensearchClientOptions, OpensearchAsyncClientOptions } from './interfaces';
+import type {
+  OpensearchClientOptions,
+  OpensearchClientOptionsFactory,
+  OpensearchAsyncClientOptions,
+} from './interfaces';
 import { OpensearchClient } from './opensearch-client';
 import { clientMapSym } from './symbols';
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -62,19 +66,37 @@ export class OpensearchModule implements OnApplicationShutdown {
       return OpensearchModule.buildAsyncProviders([ options ]);
     }
 
-    return options.map((option) => ({
-      provide: option.clientName ? buildInjectionToken(option.clientName) : OpensearchClient,
-      inject: [ clientMapSym, ...(option.inject || []) ],
-      useFactory: async (clientMap: ClientMap, ...args: any[]) => {
-        const clientOptions = await option.useFactory(...args);
-        const client = new OpensearchClient({
-          ...clientOptions,
-          clientName: option.clientName,
+    return options.map((option) => {
+      const inject: any[] = [ clientMapSym ];
+      const isUseClass = 'useClass' in option;
+
+      if (isUseClass) {
+        inject.push({
+          provide: option.useClass,
+          useClass: option.useClass,
         });
-        clientMap.set(option.clientName, client);
-        return client;
-      },
-    }));
+      } else if (Array.isArray(option.inject)) {
+        inject.push(...option.inject);
+      }
+
+      return {
+        provide: option.clientName ? buildInjectionToken(option.clientName) : OpensearchClient,
+        inject,
+        useFactory: async (clientMap: ClientMap, ...args: any[]) => {
+          const clientOptions = await (
+            isUseClass
+              ? (args[0] as OpensearchClientOptionsFactory).createOpensearchClientOptions()
+              : option.useFactory(...args)
+          );
+          const client = new OpensearchClient({
+            ...clientOptions,
+            clientName: option.clientName,
+          });
+          clientMap.set(option.clientName, client);
+          return client;
+        },
+      };
+    });
   }
 
   public constructor(

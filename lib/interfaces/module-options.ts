@@ -6,8 +6,19 @@ export interface OpensearchClientOptions extends ClientOptions {
   clientName?: string | symbol;
 }
 
-export interface OpensearchAsyncClientOptions extends Pick<ModuleMetadata, 'imports'> {
-  clientName?: string | symbol;
-  useFactory: (...args: any[]) => ClientOptions | Promise<ClientOptions>;
+type OpensearchAsyncClientOptionsBase = OpensearchClientOptions & Pick<ModuleMetadata, 'imports'>;
+
+interface OpensearchAsyncClientOptionsUseFactory extends OpensearchAsyncClientOptionsBase {
   inject?: any[];
+  useFactory: (...args: any[]) => ClientOptions | Promise<ClientOptions>;
 }
+
+export interface OpensearchClientOptionsFactory {
+  createOpensearchClientOptions: () => ClientOptions | Promise<ClientOptions>;
+}
+
+interface OpensearchAsyncClientOptionsUseClass extends OpensearchAsyncClientOptionsBase {
+  useClass: OpensearchClientOptionsFactory;
+}
+
+export type OpensearchAsyncClientOptions = OpensearchAsyncClientOptionsUseFactory | OpensearchAsyncClientOptionsUseClass;
