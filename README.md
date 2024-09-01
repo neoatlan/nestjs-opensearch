@@ -86,6 +86,7 @@ export class SearchModule { }
 
 Module for async configuration using useClass:
 ```typescript
+import type { ClientOptions } from '@opensearch-project/opensearch';
 import { OpensearchModule, OpensearchClientOptionsFactory } from 'nestjs-opensearch';
 
 @Injectable()
