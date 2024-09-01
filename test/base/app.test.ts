@@ -3,7 +3,7 @@
 
 import { Injectable, Module, Optional } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { ClientOptions } from '@opensearch-project/opensearch';
+import type { ClientOptions } from '@opensearch-project/opensearch';
 import {
   InjectOpensearchClient,
   OpensearchClient,
