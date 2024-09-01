@@ -10,6 +10,10 @@ import { clientMapSym } from './symbols';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 type ClientMap = Map<string | symbol | undefined, OpensearchClient>;
+interface BuildAsyncProviderResult {
+  internalProviders: Provider[];
+  externalProviders: Provider[];
+}
 
 @Module({
   providers: [
@@ -36,12 +40,12 @@ export class OpensearchModule implements OnApplicationShutdown {
   /** @deprecated Please call forRootAsync() multiple times instead of using an array */
   public static forRootAsync(options: OpensearchAsyncClientOptions[]): DynamicModule;
   public static forRootAsync(options: OpensearchAsyncClientOptions | OpensearchAsyncClientOptions[]): DynamicModule {
-    const providers = OpensearchModule.buildAsyncProviders(options);
+    const { internalProviders, externalProviders } = OpensearchModule.buildAsyncProviders(options);
     return {
       module: OpensearchModule,
       imports: Array.isArray(options) ? undefined : options.imports,
-      exports: providers,
-      providers,
+      exports: externalProviders,
+      providers: internalProviders.concat(externalProviders),
     };
   }
 
@@ -61,25 +65,29 @@ export class OpensearchModule implements OnApplicationShutdown {
     }));
   }
 
-  private static buildAsyncProviders(options: OpensearchAsyncClientOptions | OpensearchAsyncClientOptions[]): Provider[] {
+  private static buildAsyncProviders(options: OpensearchAsyncClientOptions | OpensearchAsyncClientOptions[]): BuildAsyncProviderResult {
     if (!Array.isArray(options)) {
       return OpensearchModule.buildAsyncProviders([ options ]);
     }
 
-    return options.map((option) => {
+    const internalProviders: Provider[] = [];
+    const externalProviders: Provider[] = [];
+
+    options.forEach((option) => {
       const inject: any[] = [ clientMapSym ];
       const isUseClass = 'useClass' in option;
 
       if (isUseClass) {
-        inject.push({
+        internalProviders.push({
           provide: option.useClass,
           useClass: option.useClass,
         });
+        inject.push(option.useClass);
       } else if (Array.isArray(option.inject)) {
         inject.push(...option.inject);
       }
 
-      return {
+      externalProviders.push({
         provide: option.clientName ? buildInjectionToken(option.clientName) : OpensearchClient,
         inject,
         useFactory: async (clientMap: ClientMap, ...args: any[]) => {
@@ -95,8 +103,13 @@ export class OpensearchModule implements OnApplicationShutdown {
           clientMap.set(option.clientName, client);
           return client;
         },
-      };
+      });
     });
+
+    return {
+      internalProviders,
+      externalProviders,
+    };
   }
 
   public constructor(
