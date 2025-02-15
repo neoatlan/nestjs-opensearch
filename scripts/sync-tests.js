@@ -1,10 +1,12 @@
 #!/usr/bin/env node
-const { copyFile, readdir } = require('fs/promises');
+const { copyFile, cp, readdir } = require('fs/promises');
 const { join } = require('path');
+const { rimraf } = require('rimraf');
 
 const NON_COPYING_BASE_FILES = [ 'package.json' ];
 
 async function main() {
+  const distDir = join(__dirname, '..', 'dist');
   const testRoot = join(__dirname, '..', 'test');
   const testDirs = (await readdir(testRoot, { withFileTypes: true }))
     .filter((dir) => dir.isDirectory() && dir.name !== 'base')
@@ -26,6 +28,11 @@ async function main() {
         ),
       );
     }
+    promises.push((async () => {
+      const testDistDir = join(testRoot, testDir, 'dist');
+      await rimraf(testDistDir);
+      await cp(distDir, testDistDir, { recursive: true });
+    })());
   }
 
   await Promise.all(promises);
