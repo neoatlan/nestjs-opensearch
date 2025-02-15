@@ -16,7 +16,7 @@
     "@opensearch-project/opensearch": "^2.0.0",
     "@types/jest": "^28.1.6",
     "jest": "^28.1.3",
-    "nestjs-opensearch": "link:../../dist",
+    "nestjs-opensearch": "link:dist",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.5.6",
     "ts-jest": "^28.0.8",

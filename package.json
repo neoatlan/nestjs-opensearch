@@ -1,6 +1,6 @@
 {
   "name": "nestjs-opensearch",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "author": "neoatlan",
   "license": "MIT",
   "description": "OpenSearch module for NestJS framework",
@@ -8,11 +8,11 @@
     "type": "git",
     "url": "https://github.com/neoatlan/nestjs-opensearch.git"
   },
-  "packageManager": "yarn@3.6.1",
+  "packageManager": "yarn@4.6.0",
   "scripts": {
     "build": "yarn clean && tsc",
     "clean": "rimraf dist",
-    "test": "yarn build && node scripts/sync-tests && yarn workspaces foreach -v --include 'test-*' run test"
+    "test": "yarn build && node scripts/sync-tests && yarn workspaces foreach --all -v --include 'test-*' run test"
   },
   "keywords": [
     "opensearch",
@@ -27,19 +27,18 @@
     "test/*"
   ],
   "peerDependencies": {
-    "@nestjs/common": "^8.0.0 || ^9.0.0 || ^10.0.0",
-    "@opensearch-project/opensearch": "^1.0.0 || ^2.0.0"
+    "@nestjs/common": "^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0",
+    "@opensearch-project/opensearch": "^1.0.0 || ^2.0.0 || ^3.0.0"
   },
   "devDependencies": {
-    "@nestjs/common": "^9.3.12",
-    "@opensearch-project/opensearch": "^2.0.0",
-    "@types/rimraf": "^3.0.2",
-    "@typescript-eslint/eslint-plugin": "^5.30.6",
-    "@typescript-eslint/parser": "^5.30.6",
-    "eslint": "^8.20.0",
-    "reflect-metadata": "^0.1.13",
-    "rimraf": "^3.0.2",
-    "rxjs": "^7.5.6",
-    "typescript": "^4.7.4"
+    "@nestjs/common": "^11.0.9",
+    "@opensearch-project/opensearch": "^3.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.24.0",
+    "@typescript-eslint/parser": "^8.24.0",
+    "eslint": "^9.20.1",
+    "reflect-metadata": "^0.2.2",
+    "rimraf": "^6.0.1",
+    "rxjs": "^7.8.1",
+    "typescript": "^5.7.3"
   }
 }
