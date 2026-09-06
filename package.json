@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/neoatlan/nestjs-opensearch.git"
   },
-  "packageManager": "yarn@4.6.0",
+  "packageManager": "yarn@4.18.0",
   "scripts": {
     "build": "yarn clean && tsc",
     "clean": "rimraf dist",
@@ -27,18 +27,18 @@
     "test/*"
   ],
   "peerDependencies": {
-    "@nestjs/common": "^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0",
+    "@nestjs/common": "^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0",
     "@opensearch-project/opensearch": "^1.0.0 || ^2.0.0 || ^3.0.0"
   },
   "devDependencies": {
-    "@nestjs/common": "^11.0.9",
-    "@opensearch-project/opensearch": "^3.3.0",
-    "@typescript-eslint/eslint-plugin": "^8.24.0",
-    "@typescript-eslint/parser": "^8.24.0",
-    "eslint": "^9.20.1",
+    "@nestjs/common": "^12.0.1",
+    "@opensearch-project/opensearch": "^3.6.0",
+    "@typescript-eslint/eslint-plugin": "^8.69.0",
+    "@typescript-eslint/parser": "^8.69.0",
+    "eslint": "^10.10.0",
     "reflect-metadata": "^0.2.2",
-    "rimraf": "^6.0.1",
-    "rxjs": "^7.8.1",
-    "typescript": "^5.7.3"
+    "rimraf": "^6.1.3",
+    "rxjs": "^7.8.2",
+    "typescript": "^6.0.3"
   }
 }
