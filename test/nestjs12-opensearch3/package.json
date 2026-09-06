@@ -1,0 +1,26 @@
+{
+  "name": "test-nestjs12-opensearch3",
+  "private": true,
+  "scripts": {
+    "test": "NODE_OPTIONS=--experimental-vm-modules yarn jest"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "rootDir": ".",
+    "testEnvironment": "node"
+  },
+  "devDependencies": {
+    "@nestjs/common": "^12.0.0",
+    "@nestjs/core": "^12.0.0",
+    "@nestjs/testing": "^12.0.0",
+    "@opensearch-project/opensearch": "^3.0.0",
+    "@types/jest": "^30.0.0",
+    "jest": "^30.5.1",
+    "jest-util": "^30.5.1",
+    "nestjs-opensearch": "link:dist",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "ts-jest": "^29.4.12",
+    "typescript": "^5.7.3"
+  }
+}
